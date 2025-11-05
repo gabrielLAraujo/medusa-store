@@ -22,62 +22,13 @@ module.exports = {
   },
   
   plugins: [
-    // Event bus
-    {
-      resolve: `@medusajs/event-bus-redis`,
-      options: {
-        redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
-      },
-    },
-    
-    // Cache
-    {
-      resolve: `@medusajs/cache-redis`,
-      options: {
-        redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
-        ttl: 30,
-      },
-    },
-    
-    // File storage (local) - Temporariamente desabilitado para debug
-    // {
-    //   resolve: `@medusajs/file-local`,
-    //   options: {
-    //     upload_dir: "uploads",
-    //   },
-    // },
-    
     // Admin dashboard
     {
       resolve: "@medusajs/admin",
       options: {
         autoRebuild: false,
-        develop: {
-          open: process.env.OPEN_BROWSER !== "false",
-        },
       },
     },
-    
-    // Fulfillment provider
-    {
-      resolve: `medusa-fulfillment-manual`,
-      options: {},
-    },
-    
-    // Payment providers
-    {
-      resolve: `medusa-payment-manual`,
-      options: {},
-    },
-    
-    // Stripe payment (opcional)
-    // {
-    //   resolve: `medusa-payment-stripe`,
-    //   options: {
-    //     api_key: process.env.STRIPE_API_KEY,
-    //     webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
-    //   },
-    // },
   ],
   
   modules: {},
