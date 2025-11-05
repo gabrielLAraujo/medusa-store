@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Loja virtual com Medusa.js",
   "scripts": {
-    "build": "medusa-admin build && tsc -p tsconfig.server.json",
+    "build": "medusa-admin build",
     "start": "medusa start",
     "dev": "medusa develop",
     "seed": "medusa seed -f ./data/seed.json",
