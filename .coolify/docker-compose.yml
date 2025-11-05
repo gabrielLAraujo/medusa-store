@@ -7,8 +7,8 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: medusa
-      POSTGRES_PASSWORD: qTaLiUQasazglXgbLJVIAXK2RwDiYTZR
-      POSTGRES_DB: medusa_db
+      POSTGRES_PASSWORD: medusa_password
+      POSTGRES_DB: medusa
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -45,7 +45,7 @@ services:
       redis:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://medusa:qTaLiUQasazglXgbLJVIAXK2RwDiYTZR@postgres:5432/medusa_db
+      DATABASE_URL: postgresql://medusa:medusa_password@postgres:5432/medusa
       REDIS_URL: redis://redis:6379
       NODE_ENV: production
       JWT_SECRET: vvcLKOyCb31w27p4ebLnuWe4OXY8wHv8eKx+Oi8nqJU=
