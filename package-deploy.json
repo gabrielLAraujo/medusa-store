@@ -1,0 +1,44 @@
+{
+  "name": "medusa-store-deploy",
+  "description": "Informações de deploy da loja Medusa.js",
+  "domain": "desenvolvereviver.com",
+  "expires": "2026-09-04",
+  "services": {
+    "medusa": {
+      "port": 9000,
+      "healthcheck": "/health"
+    },
+    "admin": {
+      "port": 7001,
+      "path": "/app"
+    },
+    "postgres": {
+      "port": 5432,
+      "internal": true
+    },
+    "redis": {
+      "port": 6379,
+      "internal": true
+    }
+  },
+  "environment": {
+    "required": [
+      "DATABASE_URL",
+      "REDIS_URL",
+      "JWT_SECRET",
+      "COOKIE_SECRET",
+      "STORE_CORS",
+      "ADMIN_CORS"
+    ],
+    "optional": [
+      "STRIPE_API_KEY",
+      "STRIPE_WEBHOOK_SECRET"
+    ]
+  },
+  "deployment": {
+    "platform": "Coolify",
+    "hosting": "Hostinger",
+    "method": "Docker Compose"
+  }
+}
+
