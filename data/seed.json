@@ -1,0 +1,13 @@
+{
+  "store": {
+    "currencies": ["usd", "brl"],
+    "default_currency_code": "brl"
+  },
+  "users": [
+    {
+      "email": "admin@medusa-test.com",
+      "password": "supersecret"
+    }
+  ]
+}
+

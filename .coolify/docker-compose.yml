@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_USER: medusa
       POSTGRES_PASSWORD: medusa_password
-      POSTGRES_DB: medusa
+      POSTGRES_DB: medusa_fresh
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -45,7 +45,7 @@ services:
       redis:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://medusa:medusa_password@postgres:5432/medusa
+      DATABASE_URL: postgresql://medusa:medusa_password@postgres:5432/medusa_fresh
       REDIS_URL: redis://redis:6379
       NODE_ENV: production
       JWT_SECRET: vvcLKOyCb31w27p4ebLnuWe4OXY8wHv8eKx+Oi8nqJU=
@@ -57,7 +57,7 @@ services:
       - "7001:7001"
     volumes:
       - medusa_uploads:/app/uploads
-    command: sh -c "npm run migration:run && npm start"
+      command: sh -c "npm run migration:run && npm start"
     networks:
       - medusa-network
     labels:
