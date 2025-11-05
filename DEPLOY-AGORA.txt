@@ -1,0 +1,63 @@
+╔═══════════════════════════════════════════════════════════════╗
+║                  🚀 DEPLOY NO COOLIFY - AGORA!                ║
+╚═══════════════════════════════════════════════════════════════╝
+
+📋 CHECKLIST RÁPIDO:
+
+✅ Repositório: https://github.com/gabrielLAraujo/medusa-store
+✅ Domínio: salmon-goldfish-177562.hostingersite.com
+✅ Senhas: Ver arquivo SENHAS.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 NO COOLIFY:
+
+1. + New Resource → Public Repository
+2. URL: https://github.com/gabrielLAraujo/medusa-store.git
+3. Branch: main
+4. Docker Compose: .coolify/docker-compose.yml
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔐 VARIÁVEIS (copie do SENHAS.txt):
+
+POSTGRES_USER=medusa
+POSTGRES_PASSWORD=qTaLiUQasazglXgbLJVIAXK2RwDiYTZR
+POSTGRES_DB=medusa_db
+DATABASE_URL=postgresql://medusa:qTaLiUQasazglXgbLJVIAXK2RwDiYTZR@postgres:5432/medusa_db
+REDIS_URL=redis://redis:6379
+JWT_SECRET=vvcLKOyCb31w27p4ebLnuWe4OXY8wHv8eKx+Oi8nqJU=
+COOKIE_SECRET=SsNCK4xrGa3o5ogt3BsO4oKcFkvf5oGwBAVoTMVcoaw=
+STORE_CORS=https://salmon-goldfish-177562.hostingersite.com
+ADMIN_CORS=https://salmon-goldfish-177562.hostingersite.com
+NODE_ENV=production
+PORT=9000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 DOMÍNIO:
+
+salmon-goldfish-177562.hostingersite.com
+↓
+Ative SSL (Let's Encrypt) ✅
+Exponha porta 9000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 DEPLOY!
+
+Clique em Deploy e aguarde 3-5 minutos
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ TESTAR:
+
+Admin: https://salmon-goldfish-177562.hostingersite.com/app
+API: https://salmon-goldfish-177562.hostingersite.com/store
+Health: https://salmon-goldfish-177562.hostingersite.com/health
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 GUIA COMPLETO: INSTRUCOES-COOLIFY.md
+
+╚═══════════════════════════════════════════════════════════════╝
