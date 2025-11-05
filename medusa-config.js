@@ -39,13 +39,13 @@ module.exports = {
       },
     },
     
-    // File storage (local)
-    {
-      resolve: `@medusajs/file-local`,
-      options: {
-        upload_dir: "uploads",
-      },
-    },
+    // File storage (local) - Temporariamente desabilitado para debug
+    // {
+    //   resolve: `@medusajs/file-local`,
+    //   options: {
+    //     upload_dir: "uploads",
+    //   },
+    // },
     
     // Admin dashboard
     {
