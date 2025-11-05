@@ -33,6 +33,9 @@ COPY --from=builder /app/build ./build
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/medusa-config.js ./
 
+# Create uploads directory with correct permissions
+RUN mkdir -p /app/uploads && chown -R medusa:nodejs /app/uploads
+
 USER medusa
 
 EXPOSE 9000 7001
