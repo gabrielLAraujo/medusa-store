@@ -57,7 +57,7 @@ services:
       - "7001:7001"
     volumes:
       - medusa_uploads:/app/uploads
-      command: sh -c "npm run migration:run && npm start"
+    command: sh -c "npm run migration:run && npm start"
     networks:
       - medusa-network
     labels:
