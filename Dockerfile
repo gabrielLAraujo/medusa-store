@@ -1,16 +1,15 @@
 FROM node:18-alpine AS base
 
-# Dependências do sistema
-FROM base AS deps
-RUN apk add --no-cache libc6-compat python3 make g++
-WORKDIR /app
+# Instalar dependências do sistema (incluindo netcat para healthcheck)
+RUN apk add --no-cache libc6-compat python3 make g++ postgresql-client
 
 # Instalar dependências
 COPY package*.json ./
 RUN npm install --production=false
 
-# Build
-FROM base AS builder
+# Dependências do sistema
+FROM base AS deps
+WORKDIR /app
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -33,14 +32,16 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/medusa-config.js ./
+COPY --from=builder /app/docker-entrypoint.sh ./docker-entrypoint.sh
 
 # Criar diretório de uploads
 RUN mkdir -p /app/uploads && chown -R medusa:nodejs /app/uploads
+RUN chmod +x /app/docker-entrypoint.sh
 
 USER medusa
 
 EXPOSE 9000 7001
 
-# Usar medusa start diretamente com host 0.0.0.0
-CMD ["npx", "medusa", "start"]
+# Usar script de entrada
+CMD ["/app/docker-entrypoint.sh"]
 
