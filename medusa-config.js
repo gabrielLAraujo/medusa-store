@@ -29,6 +29,18 @@ module.exports = {
         autoRebuild: false,
       },
     },
+    
+    // Fulfillment provider (OBRIGATÓRIO)
+    {
+      resolve: `medusa-fulfillment-manual`,
+      options: {},
+    },
+    
+    // Payment provider (OBRIGATÓRIO)
+    {
+      resolve: `medusa-payment-manual`,
+      options: {},
+    },
   ],
   
   modules: {},
