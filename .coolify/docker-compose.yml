@@ -3,14 +3,13 @@ version: '3.8'
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: medusa-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: medusa
-      POSTGRES_PASSWORD: medusa_password
-      POSTGRES_DB: medusa
+      POSTGRES_USER: ${POSTGRES_USER:-medusa}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-medusa}
+      POSTGRES_DB: ${POSTGRES_DB:-medusa}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U medusa"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-medusa}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -19,10 +18,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: medusa-redis
     restart: unless-stopped
-    volumes:
-      - redis_data:/data
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -35,7 +31,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: medusa-backend
     restart: unless-stopped
     depends_on:
       postgres:
@@ -43,27 +38,21 @@ services:
       redis:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://medusa:medusa_password@postgres:5432/medusa
+      DATABASE_URL: postgresql://${POSTGRES_USER:-medusa}:${POSTGRES_PASSWORD:-medusa}@postgres:5432/${POSTGRES_DB:-medusa}
       REDIS_URL: redis://redis:6379
       NODE_ENV: production
-      JWT_SECRET: vvcLKOyCb31w27p4ebLnuWe4OXY8wHv8eKx+Oi8nqJU=
-      COOKIE_SECRET: SsNCK4xrGa3o5ogt3BsO4oKcFkvf5oGwBAVoTMVcoaw=
-      STORE_CORS: http://p0wkgcwwo00sok80gck0808s.148.230.77.89.sslip.io
-      ADMIN_CORS: http://p0wkgcwwo00sok80gck0808s.148.230.77.89.sslip.io
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+      STORE_CORS: ${STORE_CORS}
+      ADMIN_CORS: ${ADMIN_CORS}
     ports:
       - "${PORT:-9000}:9000"
       - "7001:7001"
-    volumes:
-      - medusa_uploads:/app/uploads
-    command: sh -c "npm run migration:run && npm start"
+    command: sh -c "npm run migrations && npm start"
     networks:
       - medusa-network
     labels:
       - "coolify.managed=true"
-
-volumes:
-  redis_data:
-  medusa_uploads:
 
 networks:
   medusa-network:

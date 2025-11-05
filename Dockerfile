@@ -1,40 +1,37 @@
 FROM node:18-alpine AS base
 
-# Install dependencies only when needed
+# Dependências do sistema
 FROM base AS deps
 RUN apk add --no-cache libc6-compat python3 make g++
 WORKDIR /app
 
-# Install dependencies
+# Instalar dependências
 COPY package*.json ./
-RUN npm install --production=false
+RUN npm install
 
-# Build the app
+# Build
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build admin dashboard and server
+# Build do admin
 RUN npm run build
 
-# Production image
+# Produção
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 medusa
 
-# Copy necessary files
+# Copiar arquivos necessários
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/medusa-config.js ./
-
-# Create uploads directory with correct permissions
-RUN mkdir -p /app/uploads && chown -R medusa:nodejs /app/uploads
 
 USER medusa
 

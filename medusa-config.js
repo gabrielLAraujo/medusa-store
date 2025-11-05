@@ -1,45 +1,58 @@
 module.exports = {
   projectConfig: {
-    // Redis connection
+    // Redis URL
     redis_url: process.env.REDIS_URL || "redis://localhost:6379",
     
-    // Database connection
+    // Database
     database_url: process.env.DATABASE_URL || "postgres://localhost/medusa-store",
     database_type: "postgres",
     
-    // Store and Admin CORS
+    // CORS
     store_cors: process.env.STORE_CORS || "http://localhost:8000",
     admin_cors: process.env.ADMIN_CORS || "http://localhost:7001,http://localhost:9000",
     
-    // Database connection pool
-    database_extra: {
-      ssl: process.env.DATABASE_SSL === "true" ? { rejectUnauthorized: false } : false,
-    },
-    
-    // JWT and Cookie secrets
+    // Secrets
     jwt_secret: process.env.JWT_SECRET || "supersecret",
     cookie_secret: process.env.COOKIE_SECRET || "supersecret",
   },
   
   plugins: [
-    // Admin dashboard
+    // Admin Dashboard
     {
       resolve: "@medusajs/admin",
       options: {
         autoRebuild: false,
+        develop: {
+          open: process.env.OPEN_BROWSER !== "false",
+        },
       },
     },
     
-    // Fulfillment provider (OBRIGATÓRIO)
+    // Cache com Redis
     {
-      resolve: `medusa-fulfillment-manual`,
-      options: {},
+      resolve: `@medusajs/cache-redis`,
+      options: {
+        redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
+        ttl: 30,
+      },
     },
     
-    // Payment provider (OBRIGATÓRIO)
+    // Event Bus com Redis
+    {
+      resolve: `@medusajs/event-bus-redis`,
+      options: {
+        redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
+      },
+    },
+    
+    // Fulfillment Manual (OBRIGATÓRIO)
+    {
+      resolve: `medusa-fulfillment-manual`,
+    },
+    
+    // Payment Manual (OBRIGATÓRIO)
     {
       resolve: `medusa-payment-manual`,
-      options: {},
     },
   ],
   
