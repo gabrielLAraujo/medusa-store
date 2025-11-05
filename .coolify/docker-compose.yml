@@ -8,9 +8,7 @@ services:
     environment:
       POSTGRES_USER: medusa
       POSTGRES_PASSWORD: medusa_password
-      POSTGRES_DB: medusa_fresh
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      POSTGRES_DB: medusa
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U medusa"]
       interval: 10s
@@ -45,7 +43,7 @@ services:
       redis:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://medusa:medusa_password@postgres:5432/medusa_fresh
+      DATABASE_URL: postgresql://medusa:medusa_password@postgres:5432/medusa
       REDIS_URL: redis://redis:6379
       NODE_ENV: production
       JWT_SECRET: vvcLKOyCb31w27p4ebLnuWe4OXY8wHv8eKx+Oi8nqJU=
@@ -64,7 +62,6 @@ services:
       - "coolify.managed=true"
 
 volumes:
-  postgres_data:
   redis_data:
   medusa_uploads:
 
