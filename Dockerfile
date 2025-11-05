@@ -3,13 +3,16 @@ FROM node:18-alpine AS base
 # Instalar dependências do sistema (incluindo netcat para healthcheck)
 RUN apk add --no-cache libc6-compat python3 make g++ postgresql-client
 
+# Dependências
+FROM base AS deps
+WORKDIR /app
+
 # Instalar dependências
 COPY package*.json ./
 RUN npm install --production=false
 
-# Dependências do sistema
-FROM base AS deps
-WORKDIR /app
+# Build
+FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -44,4 +47,3 @@ EXPOSE 9000 7001
 
 # Usar script de entrada
 CMD ["/app/docker-entrypoint.sh"]
-
