@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: medusa-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: medusa
+      POSTGRES_PASSWORD: medusa
+      POSTGRES_DB: medusa
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medusa"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: medusa-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  medusa:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: medusa-server
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://medusa:medusa@postgres:5432/medusa
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: supersecret_change_in_production
+      COOKIE_SECRET: supersecret_change_in_production
+      STORE_CORS: http://localhost:8000
+      ADMIN_CORS: http://localhost:7001,http://localhost:9000
+    ports:
+      - "9000:9000"
+      - "7001:7001"
+    volumes:
+      - medusa_uploads:/app/uploads
+
+volumes:
+  postgres_data:
+  redis_data:
+  medusa_uploads:
+

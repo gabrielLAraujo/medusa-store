@@ -6,10 +6,14 @@ module.exports = {
     // Database
     database_url: process.env.DATABASE_URL || "postgres://localhost/medusa-store",
     database_type: "postgres",
+    database_extra: 
+      process.env.NODE_ENV !== "development"
+        ? { ssl: { rejectUnauthorized: false } }
+        : {},
     
-    // CORS
-    store_cors: process.env.STORE_CORS || "http://localhost:8000",
-    admin_cors: process.env.ADMIN_CORS || "http://localhost:7001,http://localhost:9000",
+    // CORS - Permite todas as origens em produção (ajustar depois)
+    store_cors: process.env.STORE_CORS || "*",
+    admin_cors: process.env.ADMIN_CORS || "*",
     
     // Secrets
     jwt_secret: process.env.JWT_SECRET || "supersecret",
@@ -22,9 +26,20 @@ module.exports = {
       resolve: "@medusajs/admin",
       options: {
         autoRebuild: false,
+        serve: true,
+        path: "/app",
+        outDir: "build",
         develop: {
-          open: process.env.OPEN_BROWSER !== "false",
+          open: false,
         },
+      },
+    },
+    
+    // Event Bus com Redis (DEVE VIR ANTES DO CACHE)
+    {
+      resolve: `@medusajs/event-bus-redis`,
+      options: {
+        redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
       },
     },
     
@@ -34,14 +49,6 @@ module.exports = {
       options: {
         redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
         ttl: 30,
-      },
-    },
-    
-    // Event Bus com Redis
-    {
-      resolve: `@medusajs/event-bus-redis`,
-      options: {
-        redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
       },
     },
     

@@ -36,9 +36,10 @@ COPY --from=builder /app/build ./build
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/medusa-config.js ./
 COPY --from=builder /app/docker-entrypoint.sh ./docker-entrypoint.sh
+COPY --from=builder /app/data ./data
 
 # Criar diretório de uploads
-RUN mkdir -p /app/uploads && chown -R medusa:nodejs /app/uploads
+RUN mkdir -p /app/uploads && chown -R medusa:nodejs /app
 RUN chmod +x /app/docker-entrypoint.sh
 
 USER medusa

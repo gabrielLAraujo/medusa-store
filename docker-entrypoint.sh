@@ -2,6 +2,8 @@
 set -e
 
 echo "🚀 Starting Medusa Server..."
+echo "📋 Node version: $(node --version)"
+echo "📋 NPM version: $(npm --version)"
 
 # Aguardar PostgreSQL estar pronto
 echo "⏳ Waiting for PostgreSQL..."
@@ -26,8 +28,22 @@ if [ -z "$REDIS_URL" ]; then
   export REDIS_URL="redis://redis:6379"
 fi
 
-echo "📋 Using REDIS_URL: $REDIS_URL"
-echo "📋 Using DATABASE_URL: $DATABASE_URL"
+echo "📋 Environment:"
+echo "  - NODE_ENV: $NODE_ENV"
+echo "  - REDIS_URL: $REDIS_URL"
+echo "  - DATABASE_URL: ${DATABASE_URL%%@*}@***"  # Esconde senha
+echo "  - JWT_SECRET: ${JWT_SECRET:0:4}***"       # Mostra só início
+echo "  - COOKIE_SECRET: ${COOKIE_SECRET:0:4}***" # Mostra só início
+
+# Verificar se o build existe
+if [ ! -d "/app/build" ]; then
+  echo "⚠️ WARNING: /app/build directory not found!"
+  echo "📦 Building admin..."
+  npm run build
+fi
+
+echo "📋 Files in /app:"
+ls -la /app
 
 # Rodar migrations
 echo "📦 Running migrations..."
