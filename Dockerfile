@@ -1,7 +1,7 @@
 FROM node:18-alpine AS base
 
-# Instalar dependências do sistema (incluindo netcat para healthcheck)
-RUN apk add --no-cache libc6-compat python3 make g++ postgresql-client
+# Instalar dependências do sistema (incluindo netcat e wget para healthcheck)
+RUN apk add --no-cache libc6-compat python3 make g++ postgresql-client wget
 
 # Dependências
 FROM base AS deps
