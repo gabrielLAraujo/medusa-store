@@ -1,0 +1,77 @@
+========================================
+✅ VARIÁVEIS PRONTAS - COPIE E COLE NO COOLIFY
+========================================
+
+NODE_ENV=production
+JWT_SECRET=g8aPIxQLv/HqZyOiKvArvXK/L+6NJ0NL8DX1ea9kZRE=
+COOKIE_SECRET=C71xmvvpZ7QpHTODk5iPHgk74v1sSOIqpwxKQRtwhuM=
+POSTGRES_USER=medusa
+POSTGRES_PASSWORD=medusa2024
+POSTGRES_DB=medusa
+DATABASE_URL=postgresql://medusa:medusa2024@postgres:5432/medusa
+REDIS_URL=redis://redis:6379
+STORE_CORS=http://j8gggc0s8o048oo8kss8s440.148.230.77.89.sslip.io
+ADMIN_CORS=http://j8gggc0s8o048oo8kss8s440.148.230.77.89.sslip.io
+PORT=9000
+
+========================================
+⚠️ IMPORTANTE: NÃO ADICIONE ESTAS VARIÁVEIS:
+========================================
+
+❌ DATABASE_SSL (NÃO adicione!)
+
+========================================
+📋 PASSO A PASSO NO COOLIFY:
+========================================
+
+1. Vá no seu projeto Medusa no Coolify
+2. Clique em "Configuration" > "Environment Variables"
+3. APAGUE todas as variáveis antigas (se tiver)
+4. Copie TODAS as linhas acima (de NODE_ENV até PORT=9000)
+5. Cole no campo de variáveis do Coolify
+6. Clique em "Save"
+7. Clique em "Redeploy"
+
+========================================
+✅ APÓS O DEPLOY (aguarde 5-10 min):
+========================================
+
+Teste a API:
+http://j8gggc0s8o048oo8kss8s440.148.230.77.89.sslip.io/health
+
+Deve retornar:
+{
+  "status": "ok"
+}
+
+Acesse o Admin:
+http://j8gggc0s8o048oo8kss8s440.148.230.77.89.sslip.io/app
+
+========================================
+🎯 CRIAR USUÁRIO ADMIN:
+========================================
+
+1. No Coolify, vá em "Terminal"
+2. Selecione o serviço "medusa"
+3. Execute:
+
+npx medusa user -e admin@email.com -p senha123
+
+4. Faça login no admin com:
+   Email: admin@email.com
+   Senha: senha123
+
+========================================
+📦 SEED (OPCIONAL - Dados de Exemplo):
+========================================
+
+No terminal do Coolify (serviço medusa):
+
+npx medusa seed -f ./data/seed.json
+
+Credenciais após seed:
+Email: admin@medusa-test.com
+Senha: supersecret
+
+========================================
+

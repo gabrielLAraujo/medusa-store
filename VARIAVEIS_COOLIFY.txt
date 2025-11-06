@@ -1,0 +1,61 @@
+========================================
+VARIÁVEIS PARA COPIAR NO COOLIFY
+========================================
+
+⚠️ IMPORTANTE: 
+1. Gere novos valores para JWT_SECRET e COOKIE_SECRET
+2. Execute no terminal: openssl rand -base64 32
+3. Substitua os valores abaixo antes de colar
+4. NÃO adicione DATABASE_SSL
+
+========================================
+COPIE DAQUI ⬇️
+========================================
+
+NODE_ENV=production
+JWT_SECRET=mude-este-valor-execute-openssl-rand-base64-32
+COOKIE_SECRET=mude-este-valor-execute-openssl-rand-base64-32
+POSTGRES_USER=medusa
+POSTGRES_PASSWORD=medusa2024
+POSTGRES_DB=medusa
+DATABASE_URL=postgresql://medusa:medusa2024@postgres:5432/medusa
+REDIS_URL=redis://redis:6379
+STORE_CORS=http://j8gggc0s8o048oo8kss8s440.148.230.77.89.sslip.io
+ADMIN_CORS=http://j8gggc0s8o048oo8kss8s440.148.230.77.89.sslip.io
+PORT=9000
+
+========================================
+ATÉ AQUI ⬆️
+========================================
+
+📋 CHECKLIST:
+
+□ Copiei TODAS as variáveis acima
+□ Mudei JWT_SECRET (executei: openssl rand -base64 32)
+□ Mudei COOKIE_SECRET (executei: openssl rand -base64 32)
+□ NÃO adicionei DATABASE_SSL
+□ Colei no Coolify em "Environment Variables"
+
+========================================
+DEPOIS DO DEPLOY:
+========================================
+
+✅ Acesse: http://j8gggc0s8o048oo8kss8s440.148.230.77.89.sslip.io/health
+
+Deve retornar:
+{
+  "status": "ok"
+}
+
+✅ Admin: http://j8gggc0s8o048oo8kss8s440.148.230.77.89.sslip.io/app
+
+========================================
+CRIAR USUÁRIO ADMIN:
+========================================
+
+No terminal do Coolify (serviço medusa):
+
+npx medusa user -e admin@email.com -p senha123
+
+========================================
+

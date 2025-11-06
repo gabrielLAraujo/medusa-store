@@ -2,6 +2,12 @@
 
 Loja e-commerce completa construída com [Medusa.js](https://medusajs.com/) - Plataforma headless de código aberto.
 
+## ⚡ Quick Start
+
+**Deploy no Coolify em 5 minutos?** → [QUICK_START.md](./QUICK_START.md)
+
+**Deploy com Docker Compose (Recomendado)?** → [COOLIFY_DOCKER_COMPOSE.md](./COOLIFY_DOCKER_COMPOSE.md)
+
 ## 🚀 Tecnologias
 
 - **Backend**: Medusa.js v1.20+
@@ -94,46 +100,31 @@ npm run dev
 
 ## 🌐 Deploy no Coolify
 
-### 1. Configure as variáveis de ambiente no Coolify
+### 🎯 Método 1: Docker Compose (Recomendado)
 
-**Obrigatórias:**
-```env
-NODE_ENV=production
-DATABASE_URL=postgresql://user:password@host:5432/database
-REDIS_URL=redis://redis:6379
-JWT_SECRET=seu_secret_jwt_aqui
-COOKIE_SECRET=seu_secret_cookie_aqui
-```
+**Vantagens:**
+- ✅ Tudo configurado em um arquivo
+- ✅ PostgreSQL + Redis + Medusa juntos
+- ✅ Health checks automáticos
+- ✅ Network isolado
 
-**Opcionais:**
-```env
-STORE_CORS=https://seu-dominio.com
-ADMIN_CORS=https://seu-dominio.com
-```
+**Guia Completo:** [COOLIFY_DOCKER_COMPOSE.md](./COOLIFY_DOCKER_COMPOSE.md)
 
-### 2. Configure os serviços
+**Resumo:**
+1. No Coolify, crie recurso **"Docker Compose"**
+2. Aponte para `docker-compose.yml` na raiz
+3. Configure variáveis de ambiente do arquivo `env.coolify.example`
+4. Deploy!
 
-O Coolify irá criar automaticamente:
-- ✅ Container PostgreSQL
-- ✅ Container Redis
-- ✅ Container Medusa Server
+### 🎯 Método 2: Deploy Tradicional
 
-### 3. Health Check
+**Guia Completo:** [COOLIFY_DEPLOY.md](./COOLIFY_DEPLOY.md)
 
-O Medusa estará rodando quando você ver nos logs:
-
-```
-🎯 Starting Medusa server...
-Server is ready on port: 9000
-```
-
-### 4. Acesse o Admin
-
-Após o deploy, acesse: `https://seu-dominio.com/app`
-
-Credenciais padrão (se fez seed):
-- Email: `admin@medusa-test.com`
-- Senha: `supersecret`
+**Resumo:**
+1. No Coolify, crie recurso **"Public Repository"**
+2. Adicione serviços PostgreSQL e Redis separadamente
+3. Configure variáveis de ambiente
+4. Deploy!
 
 ## 📝 Scripts Disponíveis
 
@@ -172,37 +163,25 @@ docker exec -it medusa-server npx medusa user -e admin@email.com -p senha123
 
 ## 🔍 Troubleshooting
 
+**Problemas comuns?** → [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
+
+### Erro: "The server does not support SSL connections"
+
+**Solução:** NÃO adicione `DATABASE_SSL` nas variáveis de ambiente. O SSL está desabilitado por padrão para Docker Compose.
+
+[Ver solução detalhada →](./TROUBLESHOOTING.md#❌-erro-the-server-does-not-support-ssl-connections)
+
 ### Erro: "Local Event Bus installed"
 
-Verifique se a variável `REDIS_URL` está configurada corretamente:
+**Solução:** Verifique se `REDIS_URL=redis://redis:6379`
 
-```env
-REDIS_URL=redis://redis:6379
-```
+[Ver solução detalhada →](./TROUBLESHOOTING.md#❌-erro-local-event-bus-installed)
 
-### Erro ao conectar no PostgreSQL
+### Container reiniciando constantemente
 
-Certifique-se que:
-1. PostgreSQL está rodando
-2. `DATABASE_URL` está correto
-3. O health check do PostgreSQL passou
+**Solução:** Verifique logs de todos os serviços (postgres, redis, medusa)
 
-### Admin não carrega
-
-Certifique-se que o build foi feito:
-
-```bash
-npm run build
-```
-
-### Porta 9000 já em uso
-
-Mude a porta no `docker-compose.yml`:
-
-```yaml
-ports:
-  - "9001:9000"  # Usa porta 9001 localmente
-```
+[Ver solução detalhada →](./TROUBLESHOOTING.md#❌-container-reiniciando-constantemente)
 
 ## 📚 Estrutura do Projeto
 

@@ -7,7 +7,7 @@ module.exports = {
     database_url: process.env.DATABASE_URL || "postgres://localhost/medusa-store",
     database_type: "postgres",
     database_extra: 
-      process.env.NODE_ENV !== "development"
+      process.env.DATABASE_SSL === "true"
         ? { ssl: { rejectUnauthorized: false } }
         : {},
     
